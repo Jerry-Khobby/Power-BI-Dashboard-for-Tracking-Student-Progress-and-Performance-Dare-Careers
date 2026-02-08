@@ -116,6 +116,85 @@ The model follows a structured star-schema approach:
   * All DAX measures centralized for performance and organization
 
 ---
+---
+
+# Data Model Evolution & Integration Strategy
+
+This project was not built by merging all datasets at once. The modeling process was iterative and structured.
+
+---
+
+## Phase 1 – Power BI Track (Initial Model)
+
+The data modeling process began exclusively with the **Power BI track dataset**.
+
+During this stage:
+
+* Cleaned and transformed Power BI data using Power Query
+* Built relationships between fact and dimension tables
+* Created DAX measures
+* Validated calculations and KPIs
+* Designed initial dashboard pages
+
+This allowed the model structure, business rules, and performance logic to be tested and refined in isolation.
+
+---
+
+## Phase 2 – AWS Cloud Track Replication
+
+After finalizing the Power BI model:
+
+* The AWS Cloud dataset was cleaned separately
+* The same modeling principles were applied
+* Fact tables were structured identically
+* Relationships mirrored the Power BI model
+* Measures were validated against AWS data
+
+This ensured structural consistency across both tracks.
+
+---
+
+## Phase 3 – Unified Multi-Track Model (Append Strategy)
+
+Once both datasets were standardized:
+
+* AWS Cloud fact tables were **appended** to the Power BI fact tables
+* Track column was used to differentiate programs
+* Shared dimension tables (Learners, Date, Status) were reused
+* Measures remained centralized and consistent
+
+This created a **single unified reporting model** supporting:
+
+* Cross-track comparisons
+* Cohort-level analytics
+* Program-wide KPIs
+
+---
+
+## Why AWS Tables Still Appear in the Model Diagram
+
+You may still see AWS-related tables in the data model diagram.
+
+This is intentional because:
+
+* Some AWS datasets are referenced in dependent queries
+* Certain transformation steps rely on source references
+* Removing them would break query dependencies
+
+Although the reporting layer uses appended tables, the source AWS queries remain for structural integrity and traceability.
+
+---
+
+Then your screenshot section continues normally:
+
+```markdown
+### Data Model Screenshot
+
+![Data Model](./images/database%20model.png)
+```
+
+---
+
 
 ### Data Model Screenshot
 
@@ -173,7 +252,7 @@ Provide high-level program performance insights for stakeholders.
 *Insert screenshot here*
 
 ```markdown
-![Overall Performance](images/page1_overall_metrics.png)
+![Overall Performance](./images/page1.png)
 ```
 
 ---
@@ -230,7 +309,7 @@ Displays:
 *Insert screenshot here*
 
 ```markdown
-![Learner Insights](images/page2_detailed_insights.png)
+![Learner Insights](./images/page2.png)
 ```
 
 ---
