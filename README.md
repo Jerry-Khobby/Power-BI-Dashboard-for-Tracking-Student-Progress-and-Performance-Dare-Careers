@@ -4,9 +4,9 @@
 
 ---
 
-## Project Overview
+##  Project Overview
 
-Dare Careers is a training organization delivering programs in:
+Dare Careers is a training organization delivering professional programs in:
 
 * **Power BI**
 * **AWS Cloud**
@@ -28,27 +28,28 @@ The dashboard enables program managers and trainers to:
 
 ---
 
-##  Project Development Approach
+# Project Development Approach
 
-### Phase 1: Power BI (Standalone Model)
+## Phase 1: Power BI (Standalone Model)
 
-1. Data cleaning and transformation inside Power BI
+1. Data cleaning and transformation inside Power BI (Power Query)
 2. Data modeling and relationship establishment
 3. Creation of DAX measures
 4. Dashboard design and visualization
 
-This phase focused strictly on the **Power BI track data**.
+This phase focused strictly on the **Power BI track dataset**.
 
 ---
 
-### Phase 2: AWS Cloud Integration
+## Phase 2: AWS Cloud Integration
 
 1. Cleaned and structured AWS Cloud datasets
-2. Followed the same modeling principles used in Phase 1
-3. Appended AWS data to Power BI data
-4. Ensured model integrity and measure consistency
+2. Applied the same modeling principles from Phase 1
+3. Standardized fact tables
+4. Appended AWS data to the Power BI dataset
+5. Ensured model integrity and measure consistency
 
-Final model supports:
+The final model supports:
 
 * Multi-track reporting (Power BI + AWS)
 * Unified learner analytics
@@ -56,22 +57,21 @@ Final model supports:
 
 ---
 
-##  Data Structure
+# 🗂 Data Structure
 
-The dataset is organized as follows:
+## Zoom Attendance
 
-### Zoom Attendance
-
-* Separate directories for Power BI and AWS
+* Separate raw data for Power BI and AWS tracks
 * 10 weeks of data (Week 1 – Week 10)
 * Daily attendance logs
-* Attendance rule:
 
-  > A learner is marked as **Attended = 1** if time spent > 30 minutes
+**Attendance Rule:**
+
+> A learner is marked as **Attended = 1** if Zoom Duration > 30 minutes
 
 ---
 
-###  Labs & Quizzes
+## Labs & Quizzes
 
 * Weekly lab grades (10 weeks)
 * Weekly quiz grades (10 weeks)
@@ -79,14 +79,14 @@ The dataset is organized as follows:
 
 ---
 
-### Participation Records
+## Participation Records
 
 * Daily participation tracking
 * Engagement scores per learner
 
 ---
 
-###  Status Records
+## Status Records
 
 * Certification Status
 * Graduation Status
@@ -94,119 +94,91 @@ The dataset is organized as follows:
 
 ---
 
-##  Data Modeling
+# Data Modeling
 
-The model follows a structured star-schema approach:
+The model follows a **Star Schema Architecture**.
 
-* **Fact Tables**
+## Fact Tables
 
-  * Zoom Attendance
-  * Participation Records
-  * Labs
-  * Quizzes
+* Zoom Attendance
+* Participation Records
+* Labs
+* Quizzes
 
-* **Dimension Tables**
+## Dimension Tables
 
-  * Learners
-  * Date Table
-  * Status of Participant
+* Learners
+* Date Table
+* Status of Participant
 
-* **Measures Table**
+## Measures Table
 
-  * All DAX measures centralized for performance and organization
+* All DAX measures are centralized for performance optimization and organization.
 
----
 ---
 
 # Data Model Evolution & Integration Strategy
 
-This project was not built by merging all datasets at once. The modeling process was iterative and structured.
+This project was built iteratively rather than merging all datasets at once.
 
 ---
 
-## Phase 1 – Power BI Track (Initial Model)
+## Phase 1 – Power BI Track Model
 
-The data modeling process began exclusively with the **Power BI track dataset**.
-
-During this stage:
-
-* Cleaned and transformed Power BI data using Power Query
+* Cleaned and transformed Power BI data
 * Built relationships between fact and dimension tables
-* Created DAX measures
-* Validated calculations and KPIs
+* Created and validated DAX measures
 * Designed initial dashboard pages
 
-This allowed the model structure, business rules, and performance logic to be tested and refined in isolation.
+This allowed the business logic and KPIs to be tested in isolation.
 
 ---
 
 ## Phase 2 – AWS Cloud Track Replication
 
-After finalizing the Power BI model:
+* Cleaned AWS dataset separately
+* Replicated the same data structure
+* Mirrored relationships and modeling logic
+* Validated measures against AWS data
 
-* The AWS Cloud dataset was cleaned separately
-* The same modeling principles were applied
-* Fact tables were structured identically
-* Relationships mirrored the Power BI model
-* Measures were validated against AWS data
-
-This ensured structural consistency across both tracks.
+This ensured structural consistency across tracks.
 
 ---
 
 ## Phase 3 – Unified Multi-Track Model (Append Strategy)
 
-Once both datasets were standardized:
+* Appended AWS fact tables to Power BI fact tables
+* Introduced a **Track column** for differentiation
+* Reused shared dimension tables
+* Maintained centralized measures
 
-* AWS Cloud fact tables were **appended** to the Power BI fact tables
-* Track column was used to differentiate programs
-* Shared dimension tables (Learners, Date, Status) were reused
-* Measures remained centralized and consistent
+This resulted in a **single unified reporting model** supporting:
 
-This created a **single unified reporting model** supporting:
-
-* Cross-track comparisons
+* Cross-track comparison
 * Cohort-level analytics
 * Program-wide KPIs
 
 ---
 
-## Why AWS Tables Still Appear in the Model Diagram
+## Why AWS Tables Still Appear in the Model
 
-You may still see AWS-related tables in the data model diagram.
+Some AWS queries remain visible in the model diagram because:
 
-This is intentional because:
-
-* Some AWS datasets are referenced in dependent queries
-* Certain transformation steps rely on source references
+* They are referenced in dependent transformations
 * Removing them would break query dependencies
+* They provide traceability to source data
 
-Although the reporting layer uses appended tables, the source AWS queries remain for structural integrity and traceability.
-
----
-
-Then your screenshot section continues normally:
-
-```markdown
-### Data Model Screenshot
-
-![Data Model](./images/database%20model.png)
-```
+The reporting layer uses appended tables, but source queries remain for structural integrity.
 
 ---
 
+#  Data Model Screenshot
 
-### Data Model Screenshot
-
-*Insert screenshot here*
-
-```markdown
-![Data Model](images/data_model.png)
-```
+![Data Model](./images/model.png)
 
 ---
 
-#  Dashboard Pages
+# Dashboard Pages
 
 ---
 
@@ -220,7 +192,7 @@ Provide high-level program performance insights for stakeholders.
 
 ## Visualizations
 
-###  Bar Charts
+### Bar Charts
 
 * Graduation Rate %
 * Certification Rate %
@@ -229,16 +201,14 @@ Provide high-level program performance insights for stakeholders.
 * Average Participation %
 * Average Assessment Score
 
-###  Summary Cards
+### Summary Cards
 
 * Total Learners
 * Total Certifications
 * Total Graduations
 * Total Dropouts
 
----
-
-###  Filters (Slicers)
+### Filters (Slicers)
 
 * Cohort
 * Track (Power BI / AWS)
@@ -247,17 +217,13 @@ Provide high-level program performance insights for stakeholders.
 
 ---
 
-###  Page 1 Screenshot
+## Page 1 Screenshot
 
-*Insert screenshot here*
-
-```markdown
-![Overall Performance](./images/page1.png)
-```
+![Overall Performance](./images/pageone.png)
 
 ---
 
-#  Page 2: Detailed Learner Insights
+# Page 2: Detailed Learner Insights
 
 ##  Objective
 
@@ -267,7 +233,7 @@ Provide granular learner-level analytics for trainers and program managers.
 
 ## Visualizations
 
-###  Learner Table
+### Learner Table
 
 Displays:
 
@@ -280,8 +246,6 @@ Displays:
 * Certification Status
 * Graduation Status
 
----
-
 ### Summary Cards
 
 * Count of Labs
@@ -291,9 +255,7 @@ Displays:
 * Average Participation %
 * Average Assessment Score
 
----
-
-###  Filters
+### Filters
 
 * Cohort
 * Track
@@ -304,23 +266,19 @@ Displays:
 
 ---
 
-###  Page 2 Screenshot
+## Page 2 Screenshot
 
-*Insert screenshot here*
-
-```markdown
-![Learner Insights](./images/page2.png)
-```
+![Learner Insights](./images/pagetwo.png)
 
 ---
 
-#  Business Logic & Rules
+# Business Logic & Rules
 
-##  Attendance Rule
+## Attendance Rule
 
 A learner is considered **Attended** if:
 
-```text
+```
 Zoom Duration > 30 minutes
 ```
 
@@ -328,15 +286,13 @@ This rule applies across all attendance calculations.
 
 ---
 
-#  DAX Measures
+#  Key DAX Measures
 
 All measures are centralized in the **Measures Table**.
 
-Below are the key calculated measures used in the project.
-
 ---
 
-##  Certification & Graduation
+## Certification & Graduation
 
 ```DAX
 Certification Rate % =
@@ -366,7 +322,7 @@ CALCULATE(
 
 ---
 
-##  Attendance Metrics
+## Attendance Metrics
 
 ```DAX
 Attended Sessions =
@@ -374,11 +330,6 @@ CALCULATE(
     COUNTROWS('Zoom Attendance'),
     'Zoom Attendance'[Attended] = 1
 )
-```
-
-```DAX
-Average Attendance % =
-DIVIDE([Total Hours in Class] * 60, [Total Class Sessions]*120)
 ```
 
 ```DAX
@@ -392,9 +343,14 @@ RETURN
 DIVIDE(AttendedMinutes, 60, 0)
 ```
 
+```DAX
+Average Attendance % =
+DIVIDE([Total Hours in Class] * 60, [Total Class Sessions]*120)
+```
+
 ---
 
-##  Assessment Metrics
+## Assessment Metrics
 
 ```DAX
 Average Lab Score = AVERAGE(Labs[Lab Score])
@@ -415,11 +371,11 @@ DIVIDE(
 
 ---
 
-##  Participation Metrics
+## Participation Metrics
 
 ```DAX
 Average Participation % =
-[Total Participation Records]/[Attended Sessions]
+[Total Participation Records] / [Attended Sessions]
 ```
 
 ```DAX
@@ -437,16 +393,16 @@ SUMX(
 
 ---
 
-#  Key Insights Enabled
+# Key Insights Enabled
 
 This dashboard allows Dare Careers to:
 
-* Identify learners below attendance threshold
+* Identify learners below attendance thresholds
 * Track weekly engagement trends
 * Monitor certification performance per cohort
 * Compare AWS vs Power BI track performance
 * Detect duplicate participation entries
-* Measure program effectiveness
+* Measure overall program effectiveness
 
 ---
 
@@ -454,18 +410,7 @@ This dashboard allows Dare Careers to:
 
 * Power BI Desktop
 * DAX (Data Analysis Expressions)
-* Data Modeling (Star Schema)
+* Star Schema Data Modeling
 * AWS Cloud Dataset Integration
-* Power Query (Data Cleaning & Transformation)
-
----
-
-#  Future Improvements
-
-* Automate AWS ingestion via API
-* Add predictive dropout risk scoring
-* Deploy dashboard to Power BI Service
-* Implement Row-Level Security (RLS)
-* Add trend forecasting visuals
-
+* Power Query (ETL & Transformation)
 
