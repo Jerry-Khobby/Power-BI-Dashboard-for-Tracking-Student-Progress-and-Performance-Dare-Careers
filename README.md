@@ -57,7 +57,7 @@ The final model supports:
 
 ---
 
-# 🗂 Data Structure
+#  Data Structure
 
 ## Zoom Attendance
 
