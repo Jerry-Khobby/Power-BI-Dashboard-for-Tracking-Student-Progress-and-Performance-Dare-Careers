@@ -210,6 +210,19 @@ Counts the total number of distinct Zoom session dates.
 
 ---
 
+### Total Possible Sessions
+
+```DAX
+Total Possible Sessions =
+CALCULATE(
+    DISTINCTCOUNT('Zoom Attendance'[Date])
+)
+```
+
+Counts total possible Zoom sessions in the current filter context.
+
+---
+
 ### Total Possible Participation Days
 
 ```DAX
@@ -221,6 +234,17 @@ CALCULATE(
 ```
 
 Counts total class days independent of learner-level filters.
+
+---
+
+### Total Sessions (Participation Check)
+
+```DAX
+Total Sessions (Participation Check) =
+DISTINCTCOUNT('Participation Records'[Date])
+```
+
+Counts distinct session dates from the Participation Records table. Used to validate session counts against Zoom data.
 
 ---
 
@@ -325,17 +349,22 @@ Average Attendance Rate =
 AVERAGEX(
     Learners,
     DIVIDE(
-        COALESCE(CALCULATE(SUM('Zoom Attendance'[Attended])), 0),
+        COALESCE(
+            CALCULATE(
+                SUM('Zoom Attendance'[Attended])
+            ),
+            0
+        ),
         CALCULATE(
             DISTINCTCOUNT('Zoom Attendance'[Date]),
-            ALL('Zoom Attendance')
+            ALLEXCEPT('Zoom Attendance', 'Zoom Attendance'[Week])
         ),
         0
     )
 )
 ```
 
-Measures the proportion of Zoom sessions each learner attended.
+Measures the proportion of Zoom sessions each learner attended. Uses `ALLEXCEPT` to preserve week-level filtering while removing other context.
 
 ---
 
@@ -346,20 +375,23 @@ Average Participation Rate =
 VAR TotalDays =
     CALCULATE(
         DISTINCTCOUNT('Participation Records'[Date]),
-        ALL('Participation Records')
+        ALLEXCEPT('Participation Records', 'Participation Records'[Week])
     )
 RETURN
     AVERAGEX(
         Learners,
         DIVIDE(
-            COALESCE(CALCULATE(COUNTROWS('Participation Records')), 0),
+            COALESCE(
+                CALCULATE(COUNTROWS('Participation Records')),
+                0
+            ),
             TotalDays,
             0
         )
     )
 ```
 
-Measures proportion of class days learners actively participated.
+Measures proportion of class days learners actively participated. Uses `ALLEXCEPT` to preserve week-level filtering while removing other context.
 
 ---
 
@@ -394,10 +426,8 @@ Mean lab performance on a 0–100 scale.
 ```DAX
 Average Assessment Score =
 DIVIDE(
-    CALCULATE(SUM(Quizzes[Quiz Score])) +
-    CALCULATE(SUM(Labs[Lab Score])),
-    CALCULATE(COUNT(Quizzes[Quiz Score])) +
-    CALCULATE(COUNT(Labs[Lab Score])),
+    CALCULATE(SUM(Quizzes[Quiz Score])) + CALCULATE(SUM(Labs[Lab Score])),
+    CALCULATE(COUNT(Quizzes[Quiz Score])) + CALCULATE(COUNT(Labs[Lab Score])),
     0
 )
 ```
@@ -481,6 +511,7 @@ Includes supporting summary metrics:
 * Star schema for scalability and performance
 * Centralized measures table
 * ALL() usage to protect executive KPIs from slicer distortion
+* ALLEXCEPT() on Week for attendance and participation rates to enable week-level filtering
 * COALESCE() to prevent learner exclusion from averages
 * Weighted assessment calculation for mathematical accuracy
 * Append strategy for multi-track scalability
